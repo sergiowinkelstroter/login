@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useEffect } from "react";
 import { User } from "../types/User";
 import {
   browserSessionPersistence,
@@ -27,8 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     await auth.setPersistence(browserSessionPersistence).then(() => {
       return signInWithEmailAndPassword(auth, email, password);
     });

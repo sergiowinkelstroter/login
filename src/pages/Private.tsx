@@ -1,12 +1,12 @@
 import { auth } from "../services/firebase";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 export const Private = () => {
   const navigate = useNavigate();
-  const { email, password } = useContext(AuthContext);
+  const { email } = useContext(AuthContext);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -14,12 +14,12 @@ export const Private = () => {
   };
 
   if (email === "") {
-    return null;
+    return <Navigate to="/" />;
   }
 
   return (
-    <div>
-      <h1>Private</h1>
+    <div className="text-center text-white">
+      <h1>PAGE Private</h1>
       <button onClick={handleLogout}>Sair</button>
     </div>
   );
