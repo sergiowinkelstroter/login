@@ -25,10 +25,13 @@ export const Registration = () => {
         setName("");
         setEmail("");
         setPassword("");
-        navigate("/private");
+        navigate("/");
       })
       .catch((error) => {
         alert("Aconteceu algum erro!! 😥  Tente novamente!");
+        setName("");
+        setEmail("");
+        setPassword("");
       });
   };
   return (

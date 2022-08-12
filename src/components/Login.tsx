@@ -1,32 +1,14 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { FormEvent, useState } from "react";
-import { auth } from "../services/firebase";
-import { useNavigate } from "react-router-dom";
-import { User } from "../types/User";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
-export const Input = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const navigate = useNavigate();
-
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-
-        navigate("/private");
-      })
-      .catch((error) => {
-        alert(`
-    Aconteceu algum erro!! 😥 
-    Você ja se cadastrou? 🤔
-    `);
-        setEmail("");
-        setPassword("");
-      });
-  };
+export const Login = () => {
+  const {
+    handleLogin,
+    email,
+    password,
+    handleChangeEmail,
+    handleChangePassword,
+  } = useContext(AuthContext);
 
   return (
     <div className="">
@@ -42,7 +24,7 @@ export const Input = () => {
             placeholder="Digite seu email..."
             className="rounded p-2 w-full text-lg shadow-lg mb-8 outline-none"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleChangeEmail(e)}
           />
           <label htmlFor="password" className="text-xl text-gray-800">
             Senha
@@ -54,7 +36,7 @@ export const Input = () => {
             placeholder="Digite sua senha"
             className="rounded p-2 w-full text-lg shadow-lg outline-none"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleChangePassword(e)}
           />
         </div>
         <button className="bg-white w-40 p-2 rounded-md shadow-sm hover:bg-gray-200 transition-colors text-lg">

@@ -1,4 +1,4 @@
-import { Input } from "../components/Login";
+import { Login } from "../components/Login";
 import { Link } from "react-router-dom";
 
 export const Home = () => {
@@ -7,7 +7,7 @@ export const Home = () => {
       <h1 className="text-white text-2xl mt-6 text-center font-bold">
         Faça seu Login 👋
       </h1>
-      <Input />
+      <Login />
       <div className="flex  gap-3 mt-6">
         <p>Não possui conta?</p>
         <Link to="/registration" className="hover:text-blue-900">
