@@ -6,14 +6,14 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export const Private = () => {
   const navigate = useNavigate();
-  const { email } = useContext(AuthContext);
+  const { data } = useContext(AuthContext);
 
   const handleLogout = async () => {
     await signOut(auth);
     navigate("/");
   };
 
-  if (email === "") {
+  if (!data) {
     return <Navigate to="/" />;
   }
 

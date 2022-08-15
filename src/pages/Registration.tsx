@@ -37,10 +37,21 @@ export const Registration = () => {
         navigate("/");
       })
       .catch((error) => {
-        alert("Aconteceu algum erro!! 😥  Tente novamente!");
+        if (password === "") {
+          console.log("A senha é obrigatório.");
+        } else if (password.length < 7) {
+          console.log("A senha precisa ter no minimo 7 caracteres.");
+        } else if (confPassword === "") {
+          console.log("A confirmação da senha é obrigatório.");
+        } else if (confPassword !== password) {
+          console.log("As senhas não conferem.");
+        } else {
+          alert("Aconteceu algum erro!! 😥  Tente novamente!");
+        }
         setName("");
         setEmail("");
         setPassword("");
+        setConfPassword("");
       });
   };
 

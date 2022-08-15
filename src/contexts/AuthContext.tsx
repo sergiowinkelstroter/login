@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useEffect } from "react";
-import { User } from "../types/User";
+
 import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
+  User,
 } from "firebase/auth";
 import { FormEvent, useState } from "react";
 import { auth } from "../services/firebase";
@@ -11,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 interface AuthProviderProps {
   children: ReactNode;
 }
+let data: User;
 
 interface AuthContextData {
   handleLogin: (e: FormEvent) => Promise<void>;
@@ -18,6 +20,7 @@ interface AuthContextData {
   password: string | number;
   handleChangeEmail: (e: any) => void;
   handleChangePassword: (e: any) => void;
+  data: User;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -25,6 +28,7 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider({ children }: AuthProviderProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -34,16 +38,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-
+        data = user;
         navigate("/private");
+        setEmail("");
+        setPassword("");
       })
       .catch((error) => {
         alert(`
-    Aconteceu algum erro!! 😥 
-    Você ja se cadastrou? 🤔
+                Aconteceu algum erro!! 😥 
+                Você ja se cadastrou? 🤔
     `);
-        setEmail("");
-        setPassword("");
       });
   };
 
@@ -63,6 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
         handleChangeEmail,
         handleChangePassword,
+        data,
       }}
     >
       {children}
